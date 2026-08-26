@@ -64,12 +64,12 @@ def text_to_speech(text: str) -> str:
 
     # ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
     client = ElevenLabs(
-        api_key="sk_3bdc6c5233b287809eeecf6e7c8caad0576a4f132ff2b229",
+        api_key="Enter the API key",
     )
 
     # Calling the text_to_speech conversion API with detailed parameters
     response = client.text_to_speech.convert(
-        voice_id="V6mpzZ1krBodIBG8UCB7",  # Clone your voice on ElevenLabs dashboard and copy the ID
+        voice_id="Enter the voice id",  # Clone your voice on ElevenLabs dashboard and copy the ID
         optimize_streaming_latency="0",
         output_format="mp3_22050_32",
         text=text,
