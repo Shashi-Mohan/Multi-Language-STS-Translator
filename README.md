@@ -1,217 +1,413 @@
-AI-Based Voice Translation System
+# 🎙️ AI-Based Voice Translation System
 
-An AI-powered speech-to-speech translation application that takes an English audio file, converts the speech into text, translates the text into multiple languages, and then generates natural-sounding voice output for each translated language.
-The project combines three main AI stages:
-Speech-to-Text (ASR) → Machine Translation (MT) → Text-to-Speech (TTS)
-It is implemented in Python with a Streamlit web interface. The project uses AssemblyAI for speech recognition, a translation service for multilingual text conversion, and ElevenLabs for multilingual voice generation. The project report describes support for Russian, Hindi, Swedish, German, Spanish, and Japanese.
+An AI-based voice translation system that converts **English speech into multiple languages** and generates **natural-sounding voice output** for each translated language.
 
-📌 What This Project Does
-The main purpose of this project is to make multilingual communication easier by converting spoken English into translated text and spoken audio.
-For example:
-Input: English audio — "Good morning, everyone. My name is Shashi Mohan."
-The system:
-1. Receives the English audio file.
-2. Transcribes the spoken English into text.
-3. Translates the English text into multiple target languages.
-4. Converts every translated sentence into natural-sounding speech.
-5. Shows the translated text and provides audio playback through the Streamlit interface.
+The system takes an English audio file as input, converts the speech into text using **AssemblyAI**, translates the text into different languages, and then converts the translated text into speech using **ElevenLabs**.
 
-The overall pipeline is:
-#
-English Audio
+The application is built using **Python** and **Streamlit**, providing a simple web interface for uploading audio, viewing the transcription and translations, and listening to the generated audio.
+
+---
+
+## 📌 About the Project
+
+The main goal of this project is to make communication between people speaking different languages easier.
+
+Instead of translating only written text, this project creates a complete **speech-to-speech translation pipeline**:
+
+```text
+English Speech
       ↓
 Speech-to-Text
       ↓
-English Transcript
+English Text
       ↓
-Machine Translation
+Translation
       ↓
-Multilingual Text
+Translated Text
       ↓
 Text-to-Speech
       ↓
-Multilingual Audio Output
-#
-🧩 What Is Needed
-To run this project, the following technologies and services are required.
-Component             Used For
-Python                Main programming language
-Streamlit             Web application / user interface
-AssemblyAI            English Speech-to-Text / transcription                 
-Translation           Translation from English into target languages
-API / library 
-ElevenLabs            Text-to-Speech and natural voice generation
-tempfile              Temporary handling of uploaded audio
-pathlib               File and path management
-uuid                  Creating unique names for generated audio files
-os                    File-system operations
-VS Code               Development environment used in the project
+Translated Voice
+```
 
-🤖 AI Services Used
+For example, when a user uploads an English audio file, the system first understands the spoken English, converts it into text, translates that text into multiple languages, and finally generates audio for each translation.
 
-1. AssemblyAI — Speech-to-Text
-AssemblyAI is used for Automatic Speech Recognition (ASR).
-The uploaded English audio is sent to AssemblyAI, which returns an English transcript.
-  # English Audio
-        ↓
-   AssemblyAI
-        ↓
-   English Text
-The project uses the AssemblyAI transcription result as the input for the translation stage.
+The project currently supports:
 
-2. Translation — Machine Translation
-The English transcript is passed to the translation stage.
-The project documentation describes the use of Google Translate for converting the English transcript into multiple languages.
-#
-    English Transcript
-           ↓
-   Translation Service
-           ↓
-        Russian
-        Hindi
-        Swedish
-        German
-        Spanish
-        Japanese
-#
-The Python implementation uses the translate library:
+- 🇷🇺 Russian
+- 🇹🇷 Turkish
+- 🇸🇪 Swedish
+- 🇩🇪 German
+- 🇪🇸 Spanish
+- 🇯🇵 Japanese
+
+---
+
+# 🧩 What Is Needed?
+
+The project uses several technologies and services. Each one performs a different part of the complete translation process.
+
+| Technology / Service | Purpose |
+|---|---|
+| **Python** | Main programming language |
+| **Streamlit** | Creates the web interface |
+| **AssemblyAI** | Converts speech into text |
+| **Translate** | Translates English text into target languages |
+| **ElevenLabs** | Converts translated text into natural-sounding speech |
+| **NumPy** | Numerical and data-related operations |
+| **UUID** | Creates unique names for generated audio files |
+| **Pathlib** | File and path handling |
+| **OS** | Operating-system and file operations |
+| **Temporary File Handling** | Temporarily stores uploaded audio during processing |
+
+---
+
+# 🤖 Technologies Used
+
+## 🐍 Python
+
+**Python** is the main programming language used to build the project.
+
+It is responsible for:
+
+- Connecting the different AI services
+- Processing the uploaded audio
+- Handling translations
+- Generating audio
+- Managing files
+- Controlling the complete workflow
+- Running the Streamlit application
+
+---
+
+## 🖥️ Streamlit
+
+**Streamlit** is used to create the web interface.
+
+It allows the user to:
+
+- Upload an audio file
+- Start the translation process
+- View the English transcription
+- View translated text
+- Play generated audio
+- Access multiple language outputs from one interface
+
+The project therefore does not require a separate frontend framework.
+
+The interface is created directly using Python and Streamlit.
+
+---
+
+## 🎙️ AssemblyAI
+
+**AssemblyAI** is used for the **Speech-to-Text (ASR)** stage.
+
+The uploaded English audio is sent to AssemblyAI, which produces an English transcript.
+
+```text
+English Audio
+      ↓
+AssemblyAI
+      ↓
+English Transcript
+```
+
+The transcript generated by AssemblyAI becomes the input for the translation stage.
+
+---
+
+## 🌍 Translate
+
+The project uses the Python `translate` package for the translation stage.
+
+The imported library is:
+
+```python
 from translate import Translator
-The translator is configured using a source language of English and a target-language code.
-Example: translator = Translator(from_lang="en", to_lang="de")
+```
 
-4. ElevenLabs — Text-to-Speech
-After translation, every translated sentence is sent to ElevenLabs.
-ElevenLabs converts the translated text into audio using its multilingual TTS model.
-The project uses:
+The system takes the English transcript and translates it into the selected target languages.
+
+Example:
+
+```python
+Translator(from_lang="en", to_lang="de")
+```
+
+This means:
+
+```text
+Source Language = English
+Target Language = German
+```
+
+---
+
+## 🔊 ElevenLabs
+
+**ElevenLabs** is used for the **Text-to-Speech (TTS)** stage.
+
+After the English text has been translated, the translated text is sent to ElevenLabs.
+
+ElevenLabs then generates natural-sounding speech.
+
+The project uses the multilingual model:
+
+```text
 eleven_multilingual_v2
-The generated audio is saved as an MP3 file with a unique filename.
+```
 
-#
+The basic process is:
+
+```text
 Translated Text
       ↓
 ElevenLabs
       ↓
-Multilingual Speech
+Generated Voice
       ↓
 MP3 Audio
-#
+```
 
-The project also configures voice characteristics such as:
-Stability
-Similarity boost
-Style
-Speaker boost
+The project also uses voice settings such as:
 
-#
-🌍 Language Codes
+- Stability
+- Similarity Boost
+- Style
+- Speaker Boost
 
-The language codes used by the project follow standard two-letter language identifiers.
+---
 
-Code                   Language              Used For
+# 🌐 Supported Languages
 
-en                     English               Source language
+The language list follows the **actual Python implementation** of the project.
 
-ru                     Russian               Russian translation
-
-hi                     Hindi                 Hindi translation
-
-sv                     Swedish               Swedish translation
-
-de                     German                German translation
-
-es                     Spanish               Spanish translation
-
-ja                     Japanese              Japanese translation
-#
-
-Examples
-en → ru    English → Russian
-en → hi    English → Hindi
-en → sv    English → Swedish
-en → de    English → German
-en → es    English → Spanish
-en → ja    English → Japanese
-
-⚠️ Important implementation note
-The project report/presentation describes the target languages as:
-Russian, Hindi, Swedish, German, Spanish, Japanese
-However, the currently provided voice_translator.py contains:
+```python
 languages = ["ru", "tr", "sv", "de", "es", "ja"]
-Here, tr means Turkish, not Hindi.
-Therefore, if the intended final project is the Hindi version documented in the report, the implementation should use:
-languages = ["ru", "hi", "sv", "de", "es", "ja"]
-This README follows the language list documented in the project report while explicitly noting the difference in the currently supplied Python file.
-🔄 Complete System Workflow
+```
 
-The system works in the following stages:
-//
-┌──────────────────────────┐
-│      User Input          │
-│  English Audio File      │
-│   WAV / MP3 / M4A        │
-└────────────┬─────────────┘
-             │
-             ▼
-┌──────────────────────────┐
-│    Streamlit Interface   │
-│       File Upload        │
-└────────────┬─────────────┘
-             │
-             ▼
-┌──────────────────────────┐
-│     Temporary Storage    │
-│       tempfile           │
-└────────────┬─────────────┘
-             │
-             ▼
-┌──────────────────────────┐
-│    Speech-to-Text (ASR) │
-│        AssemblyAI        │
-└────────────┬─────────────┘
-             │
-             ▼
-┌──────────────────────────┐
-│    English Transcript    │
-│        Text Output       │
-└────────────┬─────────────┘
-             │
-             ▼
-┌──────────────────────────┐
-│    Machine Translation   │
-│   Translation Service    │
-└────────────┬─────────────┘
-             │
-      ┌──────┼──────┬──────┬──────┬──────┐
-      ▼      ▼      ▼      ▼      ▼      ▼
-     RU     HI     SV     DE     ES     JA
-      │      │      │      │      │      │
-      └──────┴──────┴──────┴──────┴──────┘
-             │
-             ▼
-┌──────────────────────────┐
-│      ElevenLabs TTS      │
-│  eleven_multilingual_v2  │
-└────────────┬─────────────┘
-             │
-             ▼
-┌──────────────────────────┐
-│   Generated MP3 Audio    │
-│   for each language      │
-└────────────┬─────────────┘
-             │
-             ▼
-┌──────────────────────────┐
-│     Streamlit Output     │
-│                          │
-│  Translated Text + Audio │
-│  Playback / Download     │
-└──────────────────────────┘
-//
-🏗️ How the Code Works
+| Code | Language | Translation |
+|---|---|---|
+| `en` | English | Source language |
+| `ru` | Russian | English → Russian |
+| `tr` | Turkish | English → Turkish |
+| `sv` | Swedish | English → Swedish |
+| `de` | German | English → German |
+| `es` | Spanish | English → Spanish |
+| `ja` | Japanese | English → Japanese |
 
-1. Importing the Required Libraries
-The application imports Python libraries and external packages:
+### Language Code Examples
 
+```text
+EN → RU
+English → Russian
+
+EN → TR
+English → Turkish
+
+EN → SV
+English → Swedish
+
+EN → DE
+English → German
+
+EN → ES
+English → Spanish
+
+EN → JA
+English → Japanese
+```
+
+> **Note:** `tr` represents **Turkish** in the current implementation. The README follows the code as the source of truth for the supported languages.
+
+---
+
+# 🔄 How the System Works
+
+The complete system works in several stages.
+
+### 1. User Uploads Audio
+
+The user uploads an English audio file through the Streamlit web interface.
+
+Supported formats include:
+
+```text
+.wav
+.mp3
+.m4a
+```
+
+---
+
+### 2. Temporary Audio Processing
+
+The uploaded audio is temporarily stored so that it can be processed by the speech-recognition system.
+
+Temporary file handling is used instead of requiring permanent storage of the original uploaded file.
+
+---
+
+### 3. Speech-to-Text
+
+The audio is sent to **AssemblyAI**.
+
+```text
+Audio File
+    ↓
+AssemblyAI
+    ↓
+English Transcript
+```
+
+The returned transcript contains the recognized English speech.
+
+---
+
+### 4. Translation
+
+The English transcript is passed to the translation stage.
+
+The application loops through the target languages:
+
+```text
+English
+   ↓
+┌─────────┬─────────┬─────────┐
+↓         ↓         ↓
+Russian  Turkish  Swedish
+↓         ↓         ↓
+German   Spanish  Japanese
+```
+
+Each language receives its own translated text.
+
+---
+
+### 5. Text-to-Speech
+
+Each translated sentence is passed to **ElevenLabs**.
+
+```text
+Russian Text
+      ↓
+ElevenLabs
+      ↓
+Russian Audio
+
+Turkish Text
+      ↓
+ElevenLabs
+      ↓
+Turkish Audio
+
+...and so on
+```
+
+The generated speech is saved as an MP3 file.
+
+---
+
+### 6. Output
+
+The Streamlit interface displays the result for every language.
+
+Each output contains:
+
+- Language name
+- Translated text
+- Audio player
+
+The user can listen to the generated voice for each language.
+
+---
+
+# 📊 Complete System Flowchart
+
+The complete workflow can be represented as:
+
+```mermaid
+flowchart TD
+
+    A[🎙️ English Audio File] --> B[🖥️ Streamlit Web Interface]
+
+    B --> C[📁 Temporary File Handling]
+
+    C --> D[🎙️ AssemblyAI<br/>Speech-to-Text]
+
+    D --> E[📝 English Transcript]
+
+    E --> F[🌍 Translation]
+
+    F --> G[🇷🇺 RU - Russian]
+    F --> H[🇹🇷 TR - Turkish]
+    F --> I[🇸🇪 SV - Swedish]
+    F --> J[🇩🇪 DE - German]
+    F --> K[🇪🇸 ES - Spanish]
+    F --> L[🇯🇵 JA - Japanese]
+
+    G --> M[🔊 ElevenLabs TTS]
+    H --> M
+    I --> M
+    J --> M
+    K --> M
+    L --> M
+
+    M --> N[🎧 Generated MP3 Audio]
+
+    N --> O[🖥️ Streamlit Output]
+
+    O --> P[📝 Translated Text]
+    O --> Q[▶️ Audio Playback]
+```
+
+---
+
+# 🏗️ Technical Architecture
+
+The project follows a simple three-stage AI architecture:
+
+```text
+┌──────────────────────┐
+│   Speech Recognition │
+│      AssemblyAI      │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│     Translation      │
+│      Translate       │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│   Speech Generation  │
+│      ElevenLabs      │
+└──────────────────────┘
+```
+
+In short:
+
+```text
+ASR → Translation → TTS
+```
+
+Where:
+
+- **ASR** = Automatic Speech Recognition
+- **Translation** = English text to target-language text
+- **TTS** = Text-to-Speech
+
+---
+
+# 🧠 How the Code Works
+
+## 1. Importing Libraries
+
+The project imports the required Python libraries and APIs.
+
+```python
 import os
 import numpy as np
 import streamlit as st
@@ -221,95 +417,135 @@ import uuid
 from elevenlabs import VoiceSettings
 from elevenlabs.client import ElevenLabs
 from pathlib import Path
+```
 
-These libraries provide the application's UI, speech recognition, translation, voice generation, and file-management functionality.
+These libraries are used for:
 
-2. Uploading the Audio
-The Streamlit application accepts:
-.wav
+- User interface
+- Speech recognition
+- Translation
+- Text-to-speech
+- File handling
+- Unique file names
 
-.mp3
+---
 
-.m4a
+## 2. Uploading an Audio File
 
-The interface provides an upload area where the user selects the English audio file.
-audio_file = st.file_uploader(
-    "Upload an audio file (e.g., WAV, MP3, M4A)",
-    type=["wav", "mp3", "m4a"]
-)
+The Streamlit application provides an upload option for audio files.
 
-3. Temporary Audio File
-The uploaded audio is temporarily stored using Python's tempfile functionality.
-This allows the audio to be passed to the processing pipeline without permanently storing the original upload.
+The supported formats are:
 
-4. Speech-to-Text
-The transcribe_audio() function sends the uploaded audio to AssemblyAI.
-#
-Conceptually:
-Audio File
-    ↓
-AssemblyAI Transcriber
-    ↓
+```text
+WAV
+MP3
+M4A
+```
+
+The uploaded file becomes the input for the translation pipeline.
+
+---
+
+## 3. Transcribing the Audio
+
+The audio is processed using AssemblyAI.
+
+The basic flow is:
+
+```text
+Uploaded Audio
+      ↓
+AssemblyAI
+      ↓
 Transcript
-#
-The resulting transcript is then passed to the translation stage.
+```
 
-5. Translation
-The translate_text() function loops through the target languages.
-Conceptually:
-for language in languages:
-    translator = Translator(
-        from_lang="en",
-        to_lang=language
-    )
-    
-Each translated result is stored in a list.
-The result is therefore a collection of translated texts:
-Russian Text
-Hindi Text
-Swedish Text
-German Text
-Spanish Text
-Japanese Text
+The transcript is then passed to the translation function.
 
-6. Text-to-Speech
-The text_to_speech() function sends each translated sentence to ElevenLabs.
-The project uses the multilingual model:
+---
+
+## 4. Translating the Transcript
+
+The translation process uses the target-language codes:
+
+```python
+languages = ["ru", "tr", "sv", "de", "es", "ja"]
+```
+
+For each language, the application creates a translator.
+
+For example:
+
+```python
+translator = Translator(
+    from_lang="en",
+    to_lang="de"
+)
+```
+
+The same process is repeated for the other target languages.
+
+---
+
+## 5. Generating Voice
+
+The translated text is sent to ElevenLabs.
+
+The multilingual model used is:
+
+```text
 eleven_multilingual_v2
-The generated audio is returned as a response and written to an MP3 file.
+```
+
+The generated audio is saved as an MP3 file.
+
 A UUID is used to create a unique filename:
+
+```python
 save_file_path = f"{uuid.uuid4()}.mp3"
-This prevents generated audio files from accidentally using the same filename.
+```
 
-7. Output Generation
-The application displays each language in the Streamlit interface.
-For every language, the user can see:
-Language name
-Translated text
-Audio player
-The interface is arranged into two rows of three language outputs.
+This helps prevent generated audio files from accidentally using the same filename.
 
-#
-┌────────────┬────────────┬────────────┐
-│  Russian   │   Hindi    │  Swedish   │
-│   Text     │    Text    │   Text     │
-│   Audio    │    Audio   │   Audio    │
-└────────────┴────────────┴────────────┘
+---
 
-┌────────────┬────────────┬────────────┐
-│   German   │   Spanish  │  Japanese  │
-│   Text     │    Text    │    Text    │
-│   Audio    │    Audio   │    Audio   │
-└────────────┴────────────┴────────────┘
-#
+## 6. Displaying the Output
 
-🧠 Main Functions
+The Streamlit application displays the translated results.
 
-The application is organized around three major processing functions.
-#
-voice_to_voice()
+The outputs are arranged into language sections.
 
-Controls the complete pipeline:
+```text
+┌─────────────┬─────────────┬─────────────┐
+│   Russian   │   Turkish   │   Swedish   │
+│             │             │             │
+│ Translated  │ Translated  │ Translated  │
+│    Text     │    Text     │    Text     │
+│             │             │             │
+│    Audio    │    Audio    │    Audio    │
+└─────────────┴─────────────┴─────────────┘
+
+┌─────────────┬─────────────┬─────────────┐
+│   German    │   Spanish   │   Japanese  │
+│             │             │             │
+│ Translated  │ Translated  │ Translated  │
+│    Text     │    Text     │    Text     │
+│             │             │             │
+│    Audio    │    Audio    │    Audio    │
+└─────────────┴─────────────┴─────────────┘
+```
+
+---
+
+# 🧩 Main Functions
+
+The application is organized around the main processing functions.
+
+## `voice_to_voice()`
+
+This function controls the complete translation pipeline.
+
+```text
 Audio
   ↓
 Transcription
@@ -319,32 +555,147 @@ Translation
 Speech Generation
   ↓
 Output
-#
-transcribe_audio()
-Handles speech recognition through AssemblyAI.
-Audio → AssemblyAI → English Transcript
-translate_text()
-Handles multilingual text translation.
-#
-English Text
-   ↓
-Translation
-   ↓
-RU / HI / SV / DE / ES / JA
-#
-text_to_speech()
-Generates speech using ElevenLabs.
-#
-Translated Text
-   ↓
-ElevenLabs
-   ↓
-MP3 Audio
-3
+```
 
-📁 Project Structure
-A simple repository structure can be:
-'''
+---
+
+## `transcribe_audio()`
+
+This function handles speech recognition.
+
+```text
+Audio
+  ↓
+AssemblyAI
+  ↓
+English Transcript
+```
+
+---
+
+## `translate_text()`
+
+This function handles multilingual translation.
+
+```text
+English Text
+      ↓
+Translation
+      ↓
+RU / TR / SV / DE / ES / JA
+```
+
+---
+
+## `text_to_speech()`
+
+This function generates speech using ElevenLabs.
+
+```text
+Translated Text
+      ↓
+ElevenLabs
+      ↓
+Generated MP3
+```
+
+---
+
+# 📥 Input
+
+The system accepts English audio files in the following formats:
+
+| Format | Supported |
+|---|---|
+| `.wav` | ✅ |
+| `.mp3` | ✅ |
+| `.m4a` | ✅ |
+
+The intended input is spoken English audio.
+
+---
+
+# 📤 Output
+
+The application generates translated text and voice output for:
+
+| Language | Code | Output |
+|---|---|---|
+| Russian | `ru` | Text + Audio |
+| Turkish | `tr` | Text + Audio |
+| Swedish | `sv` | Text + Audio |
+| German | `de` | Text + Audio |
+| Spanish | `es` | Text + Audio |
+| Japanese | `ja` | Text + Audio |
+
+The generated voice output is provided as MP3 audio.
+
+---
+
+# 🧪 Example
+
+Suppose the uploaded English audio contains:
+
+> **"Good morning, everyone. My name is Shashi Mohan."**
+
+### Step 1 — Speech-to-Text
+
+AssemblyAI converts the audio into:
+
+```text
+Good morning, everyone. My name is Shashi Mohan.
+```
+
+### Step 2 — Translation
+
+The English text is translated into the supported languages.
+
+```text
+RU → Russian
+TR → Turkish
+SV → Swedish
+DE → German
+ES → Spanish
+JA → Japanese
+```
+
+### Step 3 — Text-to-Speech
+
+Each translated text is sent to ElevenLabs.
+
+```text
+Russian Text
+     ↓
+Russian Voice
+
+Turkish Text
+     ↓
+Turkish Voice
+
+Swedish Text
+     ↓
+Swedish Voice
+
+German Text
+     ↓
+German Voice
+
+Spanish Text
+     ↓
+Spanish Voice
+
+Japanese Text
+     ↓
+Japanese Voice
+```
+
+---
+
+# 📁 Project Structure
+
+A simple repository structure for the project is:
+
+```text
 AI-Based-Voice-Translation-System/
 │
 ├── voice_translator.py
@@ -352,204 +703,291 @@ AI-Based-Voice-Translation-System/
 ├── .gitignore
 ├── README.md
 └── generated_audio/
-'''
-If generated audio is stored temporarily during execution, it should normally not be committed to the repository.
+```
 
-⚙️ Installation
-1. Clone the Repository
+Generated audio files should normally not be permanently committed to the repository if they are only temporary application outputs.
+
+---
+
+# ⚙️ Installation
+
+## 1. Clone the Repository
+
+```bash
 git clone <your-repository-url>
+```
+
+Move into the project directory:
+
+```bash
 cd AI-Based-Voice-Translation-System
+```
 
-2. Create a Virtual Environment
+---
+
+## 2. Create a Virtual Environment
+
+```bash
 python -m venv venv
-Windows
-venv\Scripts\activate
-macOS / Linux
-source venv/bin/activate
+```
 
-4. Install Dependencies
-Create a requirements.txt file containing the packages required by the application.
+### Windows
+
+```bash
+venv\Scripts\activate
+```
+
+### macOS / Linux
+
+```bash
+source venv/bin/activate
+```
+
+---
+
+## 3. Install Required Packages
+
+Create a `requirements.txt` file containing the required packages.
+
 Example:
+
+```text
 streamlit
 numpy
 assemblyai
 translate
 elevenlabs
-Then install them: pip install -r requirements.txt
+```
 
-🔐 API Keys
-The project requires API access for the AI services.
-You should never put API keys directly inside the Python source code or commit them to GitHub.
+Then install them:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+# 🔐 API Keys
+
+This project requires API keys for the external AI services.
+
+The application uses API access for:
+
+- AssemblyAI
+- ElevenLabs
+
+**Never publish API keys directly in your GitHub repository.**
+
 Use environment variables or Streamlit secrets instead.
-For example:
+
+Example:
+
+```python
 import os
+
 ASSEMBLYAI_API_KEY = os.getenv("ASSEMBLYAI_API_KEY")
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
-Then configure the keys in your local environment.
-Security: If API keys have previously been placed directly in source code, revoke/rotate those keys before publishing the repository.
+```
 
-▶️ Running the Application
-Start the Streamlit application with:
+If API keys have previously been placed directly in the source code, they should be **revoked/rotated before publishing the repository**.
+
+---
+
+# ▶️ Running the Application
+
+After installing the dependencies, run the Streamlit application:
+
+```bash
 streamlit run voice_translator.py
-Streamlit will provide a local web address.
-Open that address in a browser and upload an English audio file.
+```
 
-🎙️ Supported Input
-The application accepts:
-.wav
-.mp3
-.m4a
-The intended input is spoken English audio.
+The Streamlit application will open in your browser.
 
-📤 Output
-The application produces:
-English
-Original transcription
-Translated Languages
-Russian (ru)
-Hindi (hi)
-Swedish (sv)
-German (de)
-Spanish (es)
-Japanese (ja)
-For each target language, the application provides:
+Then:
 
-Translated Text
-       +
-Generated Audio
+1. Upload an English audio file.
+2. Start the processing.
+3. Wait for transcription and translation.
+4. View the translated text.
+5. Play the generated audio for each language.
 
-The generated audio is stored in MP3 format.
+---
 
-📊 Example
+# 📊 Technology Stack
 
-Input
-Good morning, everyone. My name is Shashi Mohan.
-Transcription
-Good morning, everyone. My name is Shashi Mohan.
-Translation
-Russian   → Доброе утро всем, меня зовут Шаши Мохан.
-Hindi     → सुप्रभात, मेरा नाम शशि मोहन है।
-Swedish   → God morgon allihopa, jag heter Shashi Mohan.
-German    → Guten Morgen zusammen, mein Name ist Shashi Mohan.
-Spanish   → Buenos días a todos, mi nombre es Shashi Mohan.
-Japanese  → おはようございます、皆さん。私の名前はシャシ・モハンです。
-The translated text is then converted into corresponding voice outputs using ElevenLabs.
+| Category | Technology |
+|---|---|
+| Programming Language | Python |
+| Web Framework | Streamlit |
+| Speech-to-Text | AssemblyAI |
+| Translation | Translate |
+| Text-to-Speech | ElevenLabs |
+| TTS Model | `eleven_multilingual_v2` |
+| Audio Output | MP3 |
+| Supported Input | WAV, MP3, M4A |
 
-📈 Results
-According to the project evaluation, the system demonstrated:
-Accurate transcription for clear English speech
-Reliable translation for short/general-purpose sentences
-Natural and smooth TTS output
-An intuitive Streamlit interface
-Multilingual text and audio output
-Processing time dependent on audio length and network speed
-The project report records approximately 95% transcription accuracy for clear English speech in its evaluation, while noting that translation quality can vary for longer or complex phrases.
+---
 
-🔬 Limitations
-The project has some practical limitations:
-Translation quality can vary for context-specific and idiomatic expressions.
-Processing depends on external APIs and network connectivity.
-The current system is based on uploaded audio rather than continuous live speech.
-The number of supported languages is currently limited.
-Offline/on-device processing is not implemented.
+# 🔬 Project Workflow in One View
 
-🚀 Future Scope
-The project can be extended by:
+```mermaid
+flowchart LR
 
-🌍 Adding more regional and low-resource languages
+    A[🎙️ English Audio] --> B[🖥️ Streamlit]
+    B --> C[🎙️ AssemblyAI]
+    C --> D[📝 English Text]
+    D --> E[🌍 Translate]
 
-🎙️ Adding real-time recording
+    E --> F[🇷🇺 RU]
+    E --> G[🇹🇷 TR]
+    E --> H[🇸🇪 SV]
+    E --> I[🇩🇪 DE]
+    E --> J[🇪🇸 ES]
+    E --> K[🇯🇵 JA]
 
-⚡ Supporting live voice translation
+    F --> L[🔊 ElevenLabs]
+    G --> L
+    H --> L
+    I --> L
+    J --> L
+    K --> L
 
-📴 Implementing offline/on-device AI models
+    L --> M[🎧 Multilingual MP3]
+    M --> N[🖥️ Streamlit Output]
+```
 
-🧠 Improving context-aware translation
+---
 
-📱 Developing a mobile application
+# 📈 Results
 
-🎯 Improving translation quality for complex and idiomatic speech
+The project demonstrates that speech recognition, multilingual translation, and text-to-speech can be combined into one application.
 
-🛠️ Technology Stack
-'''
-Programming Language
-        │
-        ▼
-      Python
-        │
-        ▼
-   Streamlit UI
-        │
-        ▼
- ┌───────────────┐
- │ Audio Upload  │
- └───────┬───────┘
-         │
-         ▼
-    AssemblyAI
-   Speech-to-Text
-         │
-         ▼
- English Transcript
-         │
-         ▼
- Translation Service
-         │
-         ▼
- RU / HI / SV / DE / ES / JA
-         │
-         ▼
-     ElevenLabs
-      TTS Model
-         │
-         ▼
-   Multilingual MP3
-         │
-         ▼
-   Streamlit Output
-'''
-📚 References
+The system provides:
 
-The project report references documentation and learning resources from:
+- English speech transcription
+- Multilingual text translation
+- Natural-sounding voice generation
+- Multiple language outputs
+- A simple web interface
+- Audio playback through the browser
 
-AssemblyAI — Speech-to-Text API
+The project evaluation also examines transcription accuracy, translation quality, TTS naturalness, processing time, and user experience.
 
-ElevenLabs — Text-to-Speech API
+---
 
-Google Translate / Google Cloud Translation
+# ⚠️ Limitations
 
-Streamlit
+The current system has some limitations:
 
-Speech and Language Processing — Daniel Jurafsky and James H. Martin
+- Translation quality can vary depending on the sentence and context.
+- Long or complex phrases may produce less accurate translations.
+- Processing depends on external APIs and an internet connection.
+- The current system works with uploaded audio rather than continuous live speech.
+- Only a limited number of languages are currently supported.
+- Offline/on-device processing is not implemented.
 
-Attention Is All You Need — Vaswani et al.
+---
 
-Deep Learning — Goodfellow, Bengio, and Courville
+# 🚀 Future Scope
 
-👨‍💻 Project
+The project can be improved in several ways:
 
-AI-Based Voice Translation System
+- 🌍 Add more regional and low-resource languages
+- 🎙️ Add real-time audio recording
+- ⚡ Support live voice translation
+- 📴 Implement offline/on-device AI models
+- 🧠 Improve context-aware translation
+- 📱 Develop a mobile version
+- 🎯 Improve translation of complex and idiomatic speech
 
-Developed as a B.Tech Computer Science & Engineering project at University of Engineering & Management, Jaipur.
+---
 
-Developer: Shashi Mohan
+# 📚 References
 
-Supervisor: Prof. Soumen Sarkar
+The project uses and refers to resources related to:
 
-⭐ Project Summary
+- **AssemblyAI** — Speech-to-Text API
+- **ElevenLabs** — Text-to-Speech API
+- **Google Translate / Translation Services**
+- **Streamlit** — Python web application framework
+- **Speech and Language Processing** — Daniel Jurafsky and James H. Martin
 
-This project demonstrates how Automatic Speech Recognition, Machine Translation, and Text-to-Speech can be integrated into a single application.
+---
 
-Instead of translating only text, the system creates a complete audio-to-audio pipeline:
-'''
+# 👨‍💻 Project Information
+
+**Project Name:** AI-Based Voice Translation System
+
+**Developer:** Shashi Mohan
+
+**Course:** B.Tech — Computer Science & Engineering
+
+**University:** University of Engineering & Management, Jaipur
+
+**Supervisor:** Prof. Soumen Sarkar
+
+---
+
+# ⭐ Conclusion
+
+The AI-Based Voice Translation System demonstrates a complete **speech-to-speech translation workflow** using modern AI services.
+
+The system takes:
+
+```text
 🎙️ English Speech
-      ↓
-📝 Speech Recognition
-      ↓
-🌍 Translation
-      ↓
-🔊 Voice Generation
-      ↓
-🎧 Multilingual Speech
-'''
-The goal is to provide a simple and accessible way to bridge language barriers using modern AI technologies.
+```
+
+and processes it through:
+
+```text
+AssemblyAI
+    ↓
+Speech-to-Text
+    ↓
+Translation
+    ↓
+ElevenLabs
+    ↓
+Text-to-Speech
+```
+
+to produce:
+
+```text
+🔊 Russian Audio
+🔊 Turkish Audio
+🔊 Swedish Audio
+🔊 German Audio
+🔊 Spanish Audio
+🔊 Japanese Audio
+```
+
+By combining **Python, Streamlit, AssemblyAI, translation services, and ElevenLabs**, the project provides a simple way to convert spoken English into multilingual text and voice output.
+
+---
+
+## 📌 Quick Summary
+
+```text
+INPUT
+🎙️ English Audio
+       ↓
+       ↓
+ASSEMBLYAI
+🎙️ Speech-to-Text
+       ↓
+       ↓
+TRANSLATION
+🌍 English → RU / TR / SV / DE / ES / JA
+       ↓
+       ↓
+ELEVENLABS
+🔊 Text-to-Speech
+       ↓
+       ↓
+OUTPUT
+🎧 Multilingual Audio + Translated Text
+```
+
+**Built with Python ❤️ and AI technology.**
