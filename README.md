@@ -17,7 +17,7 @@ The system:
 5. Shows the translated text and provides audio playback through the Streamlit interface.
 
 The overall pipeline is:
-'''
+#
 English Audio
       ↓
 Speech-to-Text
@@ -31,7 +31,7 @@ Multilingual Text
 Text-to-Speech
       ↓
 Multilingual Audio Output
-'''
+#
 🧩 What Is Needed
 To run this project, the following technologies and services are required.
 Component             Used For
@@ -52,7 +52,7 @@ VS Code               Development environment used in the project
 1. AssemblyAI — Speech-to-Text
 AssemblyAI is used for Automatic Speech Recognition (ASR).
 The uploaded English audio is sent to AssemblyAI, which returns an English transcript.
-   English Audio
+  # English Audio
         ↓
    AssemblyAI
         ↓
@@ -62,7 +62,7 @@ The project uses the AssemblyAI transcription result as the input for the transl
 2. Translation — Machine Translation
 The English transcript is passed to the translation stage.
 The project documentation describes the use of Google Translate for converting the English transcript into multiple languages.
-'''
+#
     English Transcript
            ↓
    Translation Service
@@ -73,7 +73,7 @@ The project documentation describes the use of Google Translate for converting t
         German
         Spanish
         Japanese
-'''
+#
 The Python implementation uses the translate library:
 from translate import Translator
 The translator is configured using a source language of English and a target-language code.
@@ -86,7 +86,7 @@ The project uses:
 eleven_multilingual_v2
 The generated audio is saved as an MP3 file with a unique filename.
 
-'''
+#
 Translated Text
       ↓
 ElevenLabs
@@ -94,7 +94,7 @@ ElevenLabs
 Multilingual Speech
       ↓
 MP3 Audio
-'''
+#
 
 The project also configures voice characteristics such as:
 Stability
@@ -102,7 +102,7 @@ Similarity boost
 Style
 Speaker boost
 
-'''
+#
 🌍 Language Codes
 
 The language codes used by the project follow standard two-letter language identifiers.
@@ -122,7 +122,7 @@ de                     German                German translation
 es                     Spanish               Spanish translation
 
 ja                     Japanese              Japanese translation
-'''
+#
 
 Examples
 en → ru    English → Russian
@@ -144,7 +144,7 @@ This README follows the language list documented in the project report while exp
 🔄 Complete System Workflow
 
 The system works in the following stages:
-'''
+//
 ┌──────────────────────────┐
 │      User Input          │
 │  English Audio File      │
@@ -206,7 +206,7 @@ The system works in the following stages:
 │  Translated Text + Audio │
 │  Playback / Download     │
 └──────────────────────────┘
-'''
+//
 🏗️ How the Code Works
 
 1. Importing the Required Libraries
@@ -244,12 +244,14 @@ This allows the audio to be passed to the processing pipeline without permanentl
 
 4. Speech-to-Text
 The transcribe_audio() function sends the uploaded audio to AssemblyAI.
+#
 Conceptually:
 Audio File
     ↓
 AssemblyAI Transcriber
     ↓
 Transcript
+#
 The resulting transcript is then passed to the translation stage.
 
 5. Translation
@@ -287,7 +289,7 @@ Translated text
 Audio player
 The interface is arranged into two rows of three language outputs.
 
-'''
+#
 ┌────────────┬────────────┬────────────┐
 │  Russian   │   Hindi    │  Swedish   │
 │   Text     │    Text    │   Text     │
@@ -299,12 +301,12 @@ The interface is arranged into two rows of three language outputs.
 │   Text     │    Text    │    Text    │
 │   Audio    │    Audio   │    Audio   │
 └────────────┴────────────┴────────────┘
-'''
+#
 
 🧠 Main Functions
 
 The application is organized around three major processing functions.
-'''
+#
 voice_to_voice()
 
 Controls the complete pipeline:
@@ -317,28 +319,28 @@ Translation
 Speech Generation
   ↓
 Output
-'''
+#
 transcribe_audio()
 Handles speech recognition through AssemblyAI.
 Audio → AssemblyAI → English Transcript
 translate_text()
 Handles multilingual text translation.
-'''
+#
 English Text
    ↓
 Translation
    ↓
 RU / HI / SV / DE / ES / JA
-'''
+#
 text_to_speech()
 Generates speech using ElevenLabs.
-'''
+#
 Translated Text
    ↓
 ElevenLabs
    ↓
 MP3 Audio
-'''
+3
 
 📁 Project Structure
 A simple repository structure can be:
