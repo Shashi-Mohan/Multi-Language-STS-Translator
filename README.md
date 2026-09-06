@@ -17,7 +17,7 @@ The system:
 5. Shows the translated text and provides audio playback through the Streamlit interface.
 
 The overall pipeline is:
-
+"""
 English Audio
       ↓
 Speech-to-Text
@@ -31,7 +31,7 @@ Multilingual Text
 Text-to-Speech
       ↓
 Multilingual Audio Output
-
+"""
 🧩 What Is Needed
 To run this project, the following technologies and services are required.
 Component             Used For
